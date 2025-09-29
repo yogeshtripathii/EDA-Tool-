@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDA Pro - Comprehensive Exploratory Data Analysis Tool</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <h1>EDA Pro</h1>
+                <span class="tagline">Professional Data Analysis Platform</span>
+            </div>
+            <div class="header-controls">
+                <button class="btn btn--outline btn--sm" id="themeToggle">🌙 Dark Mode</button>
+                <button class="btn btn--primary btn--sm" id="exportReport">📊 Export Report</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-content">
+                <div class="nav-section">
+                    <h3 class="nav-title">Main</h3>
+                    <ul class="nav-list">
+                        <li><a href="#" class="nav-link active" data-section="welcome">🏠 Welcome</a></li>
+                        <li><a href="#" class="nav-link" data-section="upload">📁 Data Upload</a></li>
+                        <li><a href="#" class="nav-link" data-section="overview">📊 Data Overview</a></li>
+                    </ul>
+                </div>
+                
+                <div class="nav-section">
+                    <h3 class="nav-title">Analysis</h3>
+                    <ul class="nav-list">
+                        <li><a href="#" class="nav-link" data-section="visualizations">📈 Visualizations</a></li>
+                        <li><a href="#" class="nav-link" data-section="statistics">🔢 Statistics</a></li>
+                        <li><a href="#" class="nav-link" data-section="correlations">🔗 Correlations</a></li>
+                    </ul>
+                </div>
+                
+                <div class="nav-section">
+                    <h3 class="nav-title">Data Processing</h3>
+                    <ul class="nav-list">
+                        <li><a href="#" class="nav-link" data-section="cleaning">🧹 Data Cleaning</a></li>
+                        <li><a href="#" class="nav-link" data-section="engineering">⚙️ Feature Engineering</a></li>
+                        <li><a href="#" class="nav-link" data-section="export">💾 Export Data</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Welcome Section -->
+            <section id="welcome-section" class="content-section active">
+                <div class="welcome-header">
+                    <h1>Welcome to EDA Pro</h1>
+                    <p class="welcome-subtitle">Your comprehensive exploratory data analysis platform</p>
+                </div>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">📁</div>
+                        <h3>Multi-format Data Support</h3>
+                        <p>Upload CSV, Excel, or JSON files with automatic format detection and parsing</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>Interactive Visualizations</h3>
+                        <p>Create dynamic charts and plots with multiple visualization libraries</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🧹</div>
+                        <h3>Data Cleaning Tools</h3>
+                        <p>Handle missing values, outliers, and data quality issues with built-in tools</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔢</div>
+                        <h3>Statistical Analysis</h3>
+                        <p>Perform comprehensive statistical tests and correlation analysis</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚙️</div>
+                        <h3>Feature Engineering</h3>
+                        <p>Create and transform features with scaling, encoding, and transformation tools</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💾</div>
+                        <h3>Export & Reports</h3>
+                        <p>Download cleaned data and generate automated analysis reports</p>
+                    </div>
+                </div>
+                
+                <div class="getting-started">
+                    <h2>Get Started</h2>
+                    <p>Begin your data analysis journey by uploading your dataset or exploring with sample data</p>
+                    <div class="action-buttons">
+                        <button class="btn btn--primary btn--lg" onclick="showSection('upload')">📁 Upload Your Data</button>
+                        <button class="btn btn--secondary btn--lg" id="loadSampleData">🎯 Try Sample Data</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Data Upload Section -->
+            <section id="upload-section" class="content-section">
+                <h1>Data Upload</h1>
+                <div class="upload-container">
+                    <div class="upload-zone" id="uploadZone">
+                        <div class="upload-content">
+                            <div class="upload-icon">📁</div>
+                            <h3>Drop your files here or click to browse</h3>
+                            <p>Supports CSV, Excel (.xlsx), and JSON files</p>
+                            <input type="file" id="fileInput" accept=".csv,.xlsx,.json" multiple hidden>
+                        </div>
+                    </div>
+                    
+                    <div class="sample-data-section">
+                        <h3>Or try with sample datasets:</h3>
+                        <div class="sample-datasets">
+                            <div class="sample-card" data-dataset="titanic">
+                                <h4>Titanic Dataset</h4>
+                                <p>Classic passenger data - 891 rows × 12 columns</p>
+                                <span class="status status--info">Classification</span>
+                            </div>
+                            <div class="sample-card" data-dataset="housing">
+                                <h4>California Housing</h4>
+                                <p>Housing price data - 20,640 rows × 10 columns</p>
+                                <span class="status status--success">Regression</span>
+                            </div>
+                            <div class="sample-card" data-dataset="sales">
+                                <h4>Retail Sales</h4>
+                                <p>Time series sales data - 1,000 rows × 7 columns</p>
+                                <span class="status status--warning">Time Series</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="uploadStatus" class="upload-status hidden"></div>
+            </section>
+
+            <!-- Data Overview Section -->
+            <section id="overview-section" class="content-section">
+                <h1>Data Overview</h1>
+                <div id="dataOverview" class="data-overview">
+                    <p class="no-data-message">No data loaded. Please upload a file or select sample data.</p>
+                </div>
+            </section>
+
+            <!-- Visualizations Section -->
+            <section id="visualizations-section" class="content-section">
+                <h1>Visualizations</h1>
+                <div class="viz-controls">
+                    <div class="control-group">
+                        <label class="form-label">Chart Type:</label>
+                        <select id="chartType" class="form-control">
+                            <option value="histogram">Histogram</option>
+                            <option value="scatter">Scatter Plot</option>
+                            <option value="box">Box Plot</option>
+                            <option value="bar">Bar Chart</option>
+                            <option value="line">Line Chart</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label class="form-label">X Column:</label>
+                        <select id="xColumn" class="form-control"></select>
+                    </div>
+                    <div class="control-group">
+                        <label class="form-label">Y Column:</label>
+                        <select id="yColumn" class="form-control"></select>
+                    </div>
+                    <button class="btn btn--primary" id="generateChart">Generate Chart</button>
+                </div>
+                
+                <div class="chart-container" style="position: relative; height: 400px;">
+                    <canvas id="mainChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Statistics Section -->
+            <section id="statistics-section" class="content-section">
+                <h1>Statistical Analysis</h1>
+                <div id="statisticsContent">
+                    <p class="no-data-message">No data loaded. Please upload a file or select sample data.</p>
+                </div>
+            </section>
+
+            <!-- Correlations Section -->
+            <section id="correlations-section" class="content-section">
+                <h1>Correlation Analysis</h1>
+                <div class="correlation-controls">
+                    <div class="control-group">
+                        <label class="form-label">Correlation Method:</label>
+                        <select id="correlationMethod" class="form-control">
+                            <option value="pearson">Pearson</option>
+                            <option value="spearman">Spearman</option>
+                            <option value="kendall">Kendall</option>
+                        </select>
+                    </div>
+                    <button class="btn btn--primary" id="calculateCorrelation">Calculate Correlations</button>
+                </div>
+                
+                <div class="chart-container" style="position: relative; height: 400px;">
+                    <canvas id="correlationChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Data Cleaning Section -->
+            <section id="cleaning-section" class="content-section">
+                <h1>Data Cleaning</h1>
+                <div class="cleaning-tools">
+                    <div class="tool-section">
+                        <h3>Missing Values</h3>
+                        <div class="tool-controls">
+                            <select id="missingValueAction" class="form-control">
+                                <option value="drop">Drop rows with missing values</option>
+                                <option value="fillMean">Fill with mean</option>
+                                <option value="fillMedian">Fill with median</option>
+                                <option value="fillMode">Fill with mode</option>
+                                <option value="fillZero">Fill with zero</option>
+                            </select>
+                            <button class="btn btn--primary" id="handleMissing">Apply</button>
+                        </div>
+                    </div>
+                    
+                    <div class="tool-section">
+                        <h3>Outliers</h3>
+                        <div class="tool-controls">
+                            <select id="outlierMethod" class="form-control">
+                                <option value="iqr">IQR Method</option>
+                                <option value="zscore">Z-Score Method</option>
+                            </select>
+                            <button class="btn btn--primary" id="detectOutliers">Detect Outliers</button>
+                            <button class="btn btn--secondary" id="removeOutliers">Remove Outliers</button>
+                        </div>
+                    </div>
+                    
+                    <div class="tool-section">
+                        <h3>Duplicates</h3>
+                        <div class="tool-controls">
+                            <button class="btn btn--primary" id="detectDuplicates">Detect Duplicates</button>
+                            <button class="btn btn--secondary" id="removeDuplicates">Remove Duplicates</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="cleaningResults" class="cleaning-results hidden"></div>
+            </section>
+
+            <!-- Feature Engineering Section -->
+            <section id="engineering-section" class="content-section">
+                <h1>Feature Engineering</h1>
+                <div class="engineering-tools">
+                    <div class="tool-section">
+                        <h3>Scaling & Normalization</h3>
+                        <div class="tool-controls">
+                            <select id="scalingMethod" class="form-control">
+                                <option value="standard">Standard Scaler</option>
+                                <option value="minmax">Min-Max Scaler</option>
+                                <option value="robust">Robust Scaler</option>
+                            </select>
+                            <select id="scaleColumn" class="form-control"></select>
+                            <button class="btn btn--primary" id="applyScaling">Apply Scaling</button>
+                        </div>
+                    </div>
+                    
+                    <div class="tool-section">
+                        <h3>Transformations</h3>
+                        <div class="tool-controls">
+                            <select id="transformMethod" class="form-control">
+                                <option value="log">Log Transform</option>
+                                <option value="sqrt">Square Root</option>
+                                <option value="square">Square</option>
+                            </select>
+                            <select id="transformColumn" class="form-control"></select>
+                            <button class="btn btn--primary" id="applyTransform">Apply Transform</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="engineeringResults" class="engineering-results hidden"></div>
+            </section>
+
+            <!-- Export Section -->
+            <section id="export-section" class="content-section">
+                <h1>Export Data</h1>
+                <div class="export-options">
+                    <div class="export-card">
+                        <h3>Download Processed Data</h3>
+                        <p>Export your cleaned and processed dataset</p>
+                        <button class="btn btn--primary" id="downloadCSV">Download as CSV</button>
+                    </div>
+                    
+                    <div class="export-card">
+                        <h3>Generate Analysis Report</h3>
+                        <p>Create a comprehensive analysis summary</p>
+                        <button class="btn btn--secondary" id="generateReport">Generate Report</button>
+                    </div>
+                    
+                    <div class="export-card">
+                        <h3>Export Visualizations</h3>
+                        <p>Save charts and plots as images</p>
+                        <button class="btn btn--outline" id="exportCharts">Export Charts</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <p>Processing your data...</p>
+        </div>
+    </div>
+
+    <!-- Modal for displaying results -->
+    <div id="resultModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Analysis Results</h2>
+                <button class="modal-close" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
